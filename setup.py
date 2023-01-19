@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='unity-grpc-build-proto-pipe',
-    version='0.0.2',
+    version='0.0.3',
     license='MIT',
     description='protobuf for grpc Pipe',
     author='esun',
@@ -14,7 +14,8 @@ setup(
         'grpcio==1.50.0',
         'grpcio-tools==1.50.0',
         'protobuf==4.21.8',
-        'betterproto[compiler]>=2.0.*'],
+        'betterproto[compiler]>=2.0.*',
+        'ugrpc_pipe @ git+ssh://git@github.com/someorgname/pkg-repo-name@v1.1#egg=ugrpc_pipe'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Programming Language :: Python :: 3.10'
