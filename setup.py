@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='unity-grpc-build-proto-pipe',
-    version='0.0.7',
+    version='0.0.8',
     license='MIT',
     description='protobuf for grpc Pipe',
     author='esun',
