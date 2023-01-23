@@ -60,11 +60,6 @@ class CommandParserReq(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
-class StringPayload(betterproto.Message):
-    text: str = betterproto.string_field(1)
-
-
-@dataclass(eq=False, repr=False)
 class GenericResp(betterproto.Message):
     status: "Status" = betterproto.message_field(1)
     payload: "betterproto_lib_google_protobuf.Any" = betterproto.message_field(2)
