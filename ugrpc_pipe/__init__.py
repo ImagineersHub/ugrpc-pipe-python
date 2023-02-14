@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from typing import (
     TYPE_CHECKING,
     Dict,
+    List,
     Optional,
 )
 
@@ -29,6 +30,11 @@ class ProjectInfoRespPlatformCode(betterproto.Enum):
     unknown = 0
     unity = 1
     unreal = 2
+
+
+@dataclass(eq=False, repr=False)
+class FloatArrayRep(betterproto.Message):
+    values: List[float] = betterproto.float_field(1)
 
 
 @dataclass(eq=False, repr=False)

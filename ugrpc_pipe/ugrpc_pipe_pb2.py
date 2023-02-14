@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1bugrpc_pipe/ugrpc_pipe.proto\x12\nugrpc_pipe\x1a\x19google/protobuf/any.proto\"l\n\x06Status\x12+\n\x04\x63ode\x18\x01 \x01(\x0e\x32\x1d.ugrpc_pipe.Status.StatusCode\x12\x0f\n\x07message\x18\x02 \x01(\t\"$\n\nStatusCode\x12\x0b\n\x07SUCCESS\x10\x00\x12\t\n\x05\x45RROR\x10\x01\"\xdc\x01\n\x0fProjectInfoResp\x12\'\n\x06status\x18\x01 \x01(\x0b\x32\x12.ugrpc_pipe.StatusH\x00\x88\x01\x01\x12:\n\x08platform\x18\x02 \x01(\x0e\x32(.ugrpc_pipe.ProjectInfoResp.PlatformCode\x12\x10\n\x08\x64\x61taPath\x18\x03 \x01(\t\x12\x13\n\x0bprojectRoot\x18\x04 \x01(\t\"2\n\x0cPlatformCode\x12\x0b\n\x07unknown\x10\x00\x12\t\n\x05unity\x10\x01\x12\n\n\x06unreal\x10\x02\x42\t\n\x07_status\"#\n\x10\x43ommandParserReq\x12\x0f\n\x07payload\x18\x01 \x01(\t\"X\n\x0bGenericResp\x12\"\n\x06status\x18\x01 \x01(\x0b\x32\x12.ugrpc_pipe.Status\x12%\n\x07payload\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any2S\n\tUGrpcPipe\x12\x46\n\rCommandParser\x12\x1c.ugrpc_pipe.CommandParserReq\x1a\x17.ugrpc_pipe.GenericRespB\x1d\xaa\x02\x1aUGrpc.Pipeline.GrpcPipe.V1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1bugrpc_pipe/ugrpc_pipe.proto\x12\nugrpc_pipe\x1a\x19google/protobuf/any.proto\"\x1f\n\rFloatArrayRep\x12\x0e\n\x06values\x18\x01 \x03(\x02\"l\n\x06Status\x12+\n\x04\x63ode\x18\x01 \x01(\x0e\x32\x1d.ugrpc_pipe.Status.StatusCode\x12\x0f\n\x07message\x18\x02 \x01(\t\"$\n\nStatusCode\x12\x0b\n\x07SUCCESS\x10\x00\x12\t\n\x05\x45RROR\x10\x01\"\xdc\x01\n\x0fProjectInfoResp\x12\'\n\x06status\x18\x01 \x01(\x0b\x32\x12.ugrpc_pipe.StatusH\x00\x88\x01\x01\x12:\n\x08platform\x18\x02 \x01(\x0e\x32(.ugrpc_pipe.ProjectInfoResp.PlatformCode\x12\x10\n\x08\x64\x61taPath\x18\x03 \x01(\t\x12\x13\n\x0bprojectRoot\x18\x04 \x01(\t\"2\n\x0cPlatformCode\x12\x0b\n\x07unknown\x10\x00\x12\t\n\x05unity\x10\x01\x12\n\n\x06unreal\x10\x02\x42\t\n\x07_status\"#\n\x10\x43ommandParserReq\x12\x0f\n\x07payload\x18\x01 \x01(\t\"X\n\x0bGenericResp\x12\"\n\x06status\x18\x01 \x01(\x0b\x32\x12.ugrpc_pipe.Status\x12%\n\x07payload\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any2S\n\tUGrpcPipe\x12\x46\n\rCommandParser\x12\x1c.ugrpc_pipe.CommandParserReq\x1a\x17.ugrpc_pipe.GenericRespB\x1d\xaa\x02\x1aUGrpc.Pipeline.GrpcPipe.V1b\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'ugrpc_pipe.ugrpc_pipe_pb2', globals())
@@ -22,18 +22,20 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\252\002\032UGrpc.Pipeline.GrpcPipe.V1'
-  _STATUS._serialized_start=70
-  _STATUS._serialized_end=178
-  _STATUS_STATUSCODE._serialized_start=142
-  _STATUS_STATUSCODE._serialized_end=178
-  _PROJECTINFORESP._serialized_start=181
-  _PROJECTINFORESP._serialized_end=401
-  _PROJECTINFORESP_PLATFORMCODE._serialized_start=340
-  _PROJECTINFORESP_PLATFORMCODE._serialized_end=390
-  _COMMANDPARSERREQ._serialized_start=403
-  _COMMANDPARSERREQ._serialized_end=438
-  _GENERICRESP._serialized_start=440
-  _GENERICRESP._serialized_end=528
-  _UGRPCPIPE._serialized_start=530
-  _UGRPCPIPE._serialized_end=613
+  _FLOATARRAYREP._serialized_start=70
+  _FLOATARRAYREP._serialized_end=101
+  _STATUS._serialized_start=103
+  _STATUS._serialized_end=211
+  _STATUS_STATUSCODE._serialized_start=175
+  _STATUS_STATUSCODE._serialized_end=211
+  _PROJECTINFORESP._serialized_start=214
+  _PROJECTINFORESP._serialized_end=434
+  _PROJECTINFORESP_PLATFORMCODE._serialized_start=373
+  _PROJECTINFORESP_PLATFORMCODE._serialized_end=423
+  _COMMANDPARSERREQ._serialized_start=436
+  _COMMANDPARSERREQ._serialized_end=471
+  _GENERICRESP._serialized_start=473
+  _GENERICRESP._serialized_end=561
+  _UGRPCPIPE._serialized_start=563
+  _UGRPCPIPE._serialized_end=646
 # @@protoc_insertion_point(module_scope)
