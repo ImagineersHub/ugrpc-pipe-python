@@ -14,7 +14,7 @@ setup(
         'grpcio==1.50.0',
         'grpcio-tools==1.50.0',
         'protobuf==4.21.8',
-        'betterproto[compiler]>=2.0.*'],
+        'betterproto[compiler]>=2.0'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Programming Language :: Python :: 3.10'
