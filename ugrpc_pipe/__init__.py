@@ -38,6 +38,11 @@ class FloatArrayRep(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
+class StringArrayRep(betterproto.Message):
+    values: List[str] = betterproto.string_field(1)
+
+
+@dataclass(eq=False, repr=False)
 class Status(betterproto.Message):
     code: "StatusStatusCode" = betterproto.enum_field(1)
     message: str = betterproto.string_field(2)
