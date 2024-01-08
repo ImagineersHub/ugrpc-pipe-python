@@ -5,6 +5,8 @@ setup(
     version='0.1.1',
     license='MIT',
     description='protobuf for grpc Pipe',
+    long_description=open("README.rst").read(),
+    long_description_content_type="text/markdown",
     author='esun',
     author_email='esun@voteb.com',
     url='https://github.com/ImagineersHub/unity-grpc-build-proto-pipe',
