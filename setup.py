@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='ugrpc_pipe',
-    version='0.1.1',
+    version='0.1.2',
     license='MIT',
     description='protobuf for grpc Pipe',
     long_description=open("README.md").read(),
@@ -15,7 +15,7 @@ setup(
     install_requires=[
         'grpcio==1.50.0',
         'grpcio-tools==1.50.0',
-        'protobuf==4.21.8',
+        'protobuf>=4.25.2,<5.0dev',
         'betterproto[compiler]==2.0.0b5'],
     classifiers=[
         'Development Status :: 3 - Alpha',
