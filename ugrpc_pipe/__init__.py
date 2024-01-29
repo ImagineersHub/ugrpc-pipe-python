@@ -16,6 +16,8 @@ import betterproto.lib.google.protobuf as betterproto_lib_google_protobuf
 import grpclib
 from betterproto.grpc.grpclib_server import ServiceBase
 
+from .. import RenderReply as _RenderReply__
+
 
 if TYPE_CHECKING:
     import grpclib.server
@@ -101,11 +103,33 @@ class UGrpcPipeStub(betterproto.ServiceStub):
             metadata=metadata,
         )
 
+    async def render_image(
+        self,
+        render_request: "_RenderRequest__",
+        *,
+        timeout: Optional[float] = None,
+        deadline: Optional["Deadline"] = None,
+        metadata: Optional["MetadataLike"] = None
+    ) -> "_RenderReply__":
+        return await self._unary_unary(
+            "/ugrpc_pipe.UGrpcPipe/RenderImage",
+            render_request,
+            _RenderReply__,
+            timeout=timeout,
+            deadline=deadline,
+            metadata=metadata,
+        )
+
 
 class UGrpcPipeBase(ServiceBase):
     async def command_parser(
         self, command_parser_req: "CommandParserReq"
     ) -> "GenericResp":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def render_image(
+        self, render_request: "_RenderRequest__"
+    ) -> "_RenderReply__":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def __rpc_command_parser(
@@ -115,6 +139,13 @@ class UGrpcPipeBase(ServiceBase):
         response = await self.command_parser(request)
         await stream.send_message(response)
 
+    async def __rpc_render_image(
+        self, stream: "grpclib.server.Stream[_RenderRequest__, _RenderReply__]"
+    ) -> None:
+        request = await stream.recv_message()
+        response = await self.render_image(request)
+        await stream.send_message(response)
+
     def __mapping__(self) -> Dict[str, grpclib.const.Handler]:
         return {
             "/ugrpc_pipe.UGrpcPipe/CommandParser": grpclib.const.Handler(
@@ -122,5 +153,11 @@ class UGrpcPipeBase(ServiceBase):
                 grpclib.const.Cardinality.UNARY_UNARY,
                 CommandParserReq,
                 GenericResp,
+            ),
+            "/ugrpc_pipe.UGrpcPipe/RenderImage": grpclib.const.Handler(
+                self.__rpc_render_image,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                _RenderRequest__,
+                _RenderReply__,
             ),
         }
