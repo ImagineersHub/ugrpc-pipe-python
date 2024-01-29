@@ -16,8 +16,6 @@ import betterproto.lib.google.protobuf as betterproto_lib_google_protobuf
 import grpclib
 from betterproto.grpc.grpclib_server import ServiceBase
 
-from .. import RenderReply as _RenderReply__
-
 
 if TYPE_CHECKING:
     import grpclib.server
@@ -85,6 +83,22 @@ class GenericResp(betterproto.Message):
     payload: "betterproto_lib_google_protobuf.Any" = betterproto.message_field(2)
 
 
+@dataclass(eq=False, repr=False)
+class RenderRequest(betterproto.Message):
+    scene_name: str = betterproto.string_field(1)
+    camera_transformation: List[float] = betterproto.float_field(2)
+    fov: float = betterproto.float_field(3)
+    resolution: List[int] = betterproto.int32_field(4)
+    vdb_path: str = betterproto.string_field(5)
+    modality: str = betterproto.string_field(6)
+    clip_range: List[float] = betterproto.float_field(7)
+
+
+@dataclass(eq=False, repr=False)
+class RenderReply(betterproto.Message):
+    image_data: bytes = betterproto.bytes_field(1)
+
+
 class UGrpcPipeStub(betterproto.ServiceStub):
     async def command_parser(
         self,
@@ -105,16 +119,16 @@ class UGrpcPipeStub(betterproto.ServiceStub):
 
     async def render_image(
         self,
-        render_request: "_RenderRequest__",
+        render_request: "RenderRequest",
         *,
         timeout: Optional[float] = None,
         deadline: Optional["Deadline"] = None,
         metadata: Optional["MetadataLike"] = None
-    ) -> "_RenderReply__":
+    ) -> "RenderReply":
         return await self._unary_unary(
             "/ugrpc_pipe.UGrpcPipe/RenderImage",
             render_request,
-            _RenderReply__,
+            RenderReply,
             timeout=timeout,
             deadline=deadline,
             metadata=metadata,
@@ -127,9 +141,7 @@ class UGrpcPipeBase(ServiceBase):
     ) -> "GenericResp":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def render_image(
-        self, render_request: "_RenderRequest__"
-    ) -> "_RenderReply__":
+    async def render_image(self, render_request: "RenderRequest") -> "RenderReply":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def __rpc_command_parser(
@@ -140,7 +152,7 @@ class UGrpcPipeBase(ServiceBase):
         await stream.send_message(response)
 
     async def __rpc_render_image(
-        self, stream: "grpclib.server.Stream[_RenderRequest__, _RenderReply__]"
+        self, stream: "grpclib.server.Stream[RenderRequest, RenderReply]"
     ) -> None:
         request = await stream.recv_message()
         response = await self.render_image(request)
@@ -157,7 +169,7 @@ class UGrpcPipeBase(ServiceBase):
             "/ugrpc_pipe.UGrpcPipe/RenderImage": grpclib.const.Handler(
                 self.__rpc_render_image,
                 grpclib.const.Cardinality.UNARY_UNARY,
-                _RenderRequest__,
-                _RenderReply__,
+                RenderRequest,
+                RenderReply,
             ),
         }

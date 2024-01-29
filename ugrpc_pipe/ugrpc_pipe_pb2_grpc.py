@@ -2,7 +2,6 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from blender import ugrpc_pipe_blender_pb2 as blender_dot_ugrpc__pipe__blender__pb2
 from ugrpc_pipe import ugrpc_pipe_pb2 as ugrpc__pipe_dot_ugrpc__pipe__pb2
 
 
@@ -22,8 +21,8 @@ class UGrpcPipeStub(object):
                 )
         self.RenderImage = channel.unary_unary(
                 '/ugrpc_pipe.UGrpcPipe/RenderImage',
-                request_serializer=blender_dot_ugrpc__pipe__blender__pb2.RenderRequest.SerializeToString,
-                response_deserializer=blender_dot_ugrpc__pipe__blender__pb2.RenderReply.FromString,
+                request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderRequest.SerializeToString,
+                response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderReply.FromString,
                 )
 
 
@@ -52,8 +51,8 @@ def add_UGrpcPipeServicer_to_server(servicer, server):
             ),
             'RenderImage': grpc.unary_unary_rpc_method_handler(
                     servicer.RenderImage,
-                    request_deserializer=blender_dot_ugrpc__pipe__blender__pb2.RenderRequest.FromString,
-                    response_serializer=blender_dot_ugrpc__pipe__blender__pb2.RenderReply.SerializeToString,
+                    request_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderRequest.FromString,
+                    response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -94,7 +93,7 @@ class UGrpcPipe(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ugrpc_pipe.UGrpcPipe/RenderImage',
-            blender_dot_ugrpc__pipe__blender__pb2.RenderRequest.SerializeToString,
-            blender_dot_ugrpc__pipe__blender__pb2.RenderReply.FromString,
+            ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderRequest.SerializeToString,
+            ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
