@@ -86,12 +86,14 @@ class GenericResp(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class RenderRequest(betterproto.Message):
     scene_name: str = betterproto.string_field(1)
-    camera_transformation: List[float] = betterproto.float_field(2)
-    camera_fov: float = betterproto.float_field(3)
-    camera_resolution: List[int] = betterproto.int32_field(4)
-    vdb_path: str = betterproto.string_field(5)
+    output_path: str = betterproto.string_field(2)
+    camera_transformation: List[float] = betterproto.float_field(3)
+    camera_fov: float = betterproto.float_field(4)
+    camera_resolution: List[int] = betterproto.int32_field(5)
     modality: str = betterproto.string_field(6)
     clip_range: List[float] = betterproto.float_field(7)
+    vdb_path: str = betterproto.string_field(8)
+    proxy_model_transformation: List[float] = betterproto.float_field(9)
 
 
 @dataclass(eq=False, repr=False)
