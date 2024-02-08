@@ -34,6 +34,12 @@ class ProjectInfoRespPlatformCode(betterproto.Enum):
     unreal = 2
 
 
+class RenderRequestQuality(betterproto.Enum):
+    LOW = 0
+    MED = 1
+    HIGH = 2
+
+
 @dataclass(eq=False, repr=False)
 class FloatArrayRep(betterproto.Message):
     values: List[float] = betterproto.float_field(1)
@@ -94,6 +100,8 @@ class RenderRequest(betterproto.Message):
     clip_range: float = betterproto.float_field(7)
     vdb_path: str = betterproto.string_field(8)
     proxy_model_transformation: List[float] = betterproto.float_field(9)
+    spacing: float = betterproto.float_field(10)
+    quality: "RenderRequestQuality" = betterproto.enum_field(11)
 
 
 @dataclass(eq=False, repr=False)
