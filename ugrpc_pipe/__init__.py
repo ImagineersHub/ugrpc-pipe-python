@@ -77,6 +77,9 @@ class ProjectInfoResp(betterproto.Message):
     project_root: str = betterproto.string_field(4)
     """represent the project root path"""
 
+    build_version: str = betterproto.string_field(5)
+    """represent the build version"""
+
 
 @dataclass(eq=False, repr=False)
 class CommandParserReq(betterproto.Message):
@@ -107,6 +110,19 @@ class RenderRequest(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class RenderReply(betterproto.Message):
     image_data: bytes = betterproto.bytes_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class PointCloudCaptureReq(betterproto.Message):
+    camera_transformation: List[float] = betterproto.float_field(1)
+    proxy_model_transformation: List[float] = betterproto.float_field(2)
+    target_point_cloud: List[float] = betterproto.float_field(3)
+    proxy_model_name: str = betterproto.string_field(4)
+
+
+@dataclass(eq=False, repr=False)
+class PointCloudCaptureResp(betterproto.Message):
+    transform_matrix: List[float] = betterproto.float_field(1)
 
 
 class UGrpcPipeStub(betterproto.ServiceStub):
@@ -144,6 +160,23 @@ class UGrpcPipeStub(betterproto.ServiceStub):
             metadata=metadata,
         )
 
+    async def point_cloud_capture(
+        self,
+        point_cloud_capture_req: "PointCloudCaptureReq",
+        *,
+        timeout: Optional[float] = None,
+        deadline: Optional["Deadline"] = None,
+        metadata: Optional["MetadataLike"] = None
+    ) -> "PointCloudCaptureResp":
+        return await self._unary_unary(
+            "/ugrpc_pipe.UGrpcPipe/PointCloudCapture",
+            point_cloud_capture_req,
+            PointCloudCaptureResp,
+            timeout=timeout,
+            deadline=deadline,
+            metadata=metadata,
+        )
+
 
 class UGrpcPipeBase(ServiceBase):
     async def command_parser(
@@ -152,6 +185,11 @@ class UGrpcPipeBase(ServiceBase):
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def render_image(self, render_request: "RenderRequest") -> "RenderReply":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def point_cloud_capture(
+        self, point_cloud_capture_req: "PointCloudCaptureReq"
+    ) -> "PointCloudCaptureResp":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def __rpc_command_parser(
@@ -168,6 +206,14 @@ class UGrpcPipeBase(ServiceBase):
         response = await self.render_image(request)
         await stream.send_message(response)
 
+    async def __rpc_point_cloud_capture(
+        self,
+        stream: "grpclib.server.Stream[PointCloudCaptureReq, PointCloudCaptureResp]",
+    ) -> None:
+        request = await stream.recv_message()
+        response = await self.point_cloud_capture(request)
+        await stream.send_message(response)
+
     def __mapping__(self) -> Dict[str, grpclib.const.Handler]:
         return {
             "/ugrpc_pipe.UGrpcPipe/CommandParser": grpclib.const.Handler(
@@ -181,5 +227,11 @@ class UGrpcPipeBase(ServiceBase):
                 grpclib.const.Cardinality.UNARY_UNARY,
                 RenderRequest,
                 RenderReply,
+            ),
+            "/ugrpc_pipe.UGrpcPipe/PointCloudCapture": grpclib.const.Handler(
+                self.__rpc_point_cloud_capture,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                PointCloudCaptureReq,
+                PointCloudCaptureResp,
             ),
         }

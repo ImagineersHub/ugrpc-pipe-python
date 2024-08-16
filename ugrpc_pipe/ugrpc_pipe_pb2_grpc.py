@@ -24,6 +24,11 @@ class UGrpcPipeStub(object):
                 request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderRequest.SerializeToString,
                 response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderReply.FromString,
                 )
+        self.PointCloudCapture = channel.unary_unary(
+                '/ugrpc_pipe.UGrpcPipe/PointCloudCapture',
+                request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureReq.SerializeToString,
+                response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureResp.FromString,
+                )
 
 
 class UGrpcPipeServicer(object):
@@ -41,6 +46,12 @@ class UGrpcPipeServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def PointCloudCapture(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_UGrpcPipeServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -53,6 +64,11 @@ def add_UGrpcPipeServicer_to_server(servicer, server):
                     servicer.RenderImage,
                     request_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderRequest.FromString,
                     response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderReply.SerializeToString,
+            ),
+            'PointCloudCapture': grpc.unary_unary_rpc_method_handler(
+                    servicer.PointCloudCapture,
+                    request_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureReq.FromString,
+                    response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureResp.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -95,5 +111,22 @@ class UGrpcPipe(object):
         return grpc.experimental.unary_unary(request, target, '/ugrpc_pipe.UGrpcPipe/RenderImage',
             ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderRequest.SerializeToString,
             ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def PointCloudCapture(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/ugrpc_pipe.UGrpcPipe/PointCloudCapture',
+            ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureReq.SerializeToString,
+            ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureResp.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
