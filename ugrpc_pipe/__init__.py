@@ -105,6 +105,7 @@ class RenderRequest(betterproto.Message):
     proxy_model_transformation: List[float] = betterproto.float_field(9)
     spacing: float = betterproto.float_field(10)
     quality: "RenderRequestQuality" = betterproto.enum_field(11)
+    active_camera: str = betterproto.string_field(12)
 
 
 @dataclass(eq=False, repr=False)
@@ -117,7 +118,8 @@ class PointCloudCaptureReq(betterproto.Message):
     camera_transformation: List[float] = betterproto.float_field(1)
     proxy_model_transformation: List[float] = betterproto.float_field(2)
     target_point_cloud: List[float] = betterproto.float_field(3)
-    proxy_model_name: str = betterproto.string_field(4)
+    source_point_cloud: List[float] = betterproto.float_field(4)
+    proxy_model_name: str = betterproto.string_field(5)
 
 
 @dataclass(eq=False, repr=False)
