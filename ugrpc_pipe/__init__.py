@@ -40,6 +40,12 @@ class RenderRequestQuality(betterproto.Enum):
     HIGH = 2
 
 
+class RenderRequestCameraMode(betterproto.Enum):
+    MAIN = 0
+    STEREO_LEFT = 1
+    STEREO_RIGHT = 2
+
+
 @dataclass(eq=False, repr=False)
 class FloatArrayRep(betterproto.Message):
     values: List[float] = betterproto.float_field(1)
@@ -106,11 +112,14 @@ class RenderRequest(betterproto.Message):
     spacing: float = betterproto.float_field(10)
     quality: "RenderRequestQuality" = betterproto.enum_field(11)
     active_camera: str = betterproto.string_field(12)
+    camera_mode: "RenderRequestCameraMode" = betterproto.enum_field(13)
 
 
 @dataclass(eq=False, repr=False)
 class RenderReply(betterproto.Message):
-    image_data: bytes = betterproto.bytes_field(1)
+    main_image_data: bytes = betterproto.bytes_field(1)
+    stereo_left_image_data: bytes = betterproto.bytes_field(2)
+    stereo_right_image_data: bytes = betterproto.bytes_field(3)
 
 
 @dataclass(eq=False, repr=False)
