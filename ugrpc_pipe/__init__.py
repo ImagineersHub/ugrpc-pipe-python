@@ -130,6 +130,7 @@ class RenderRequest(betterproto.Message):
     clip_coronal: float = betterproto.float_field(16)
     volume_dimension: List[float] = betterproto.float_field(17)
     render_mode: "RenderRequestRenderMode" = betterproto.enum_field(18)
+    clipping_sphere_position: List[float] = betterproto.float_field(19)
 
 
 @dataclass(eq=False, repr=False)
