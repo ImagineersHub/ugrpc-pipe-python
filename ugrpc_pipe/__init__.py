@@ -128,6 +128,7 @@ class RenderRequest(betterproto.Message):
     clip_sagittal: float = betterproto.float_field(15)
     clip_coronal: float = betterproto.float_field(16)
     volume_dimension: List[float] = betterproto.float_field(17)
+    render_mode: "RenderRequestRenderMode" = betterproto.enum_field(18)
 
 
 @dataclass(eq=False, repr=False)
