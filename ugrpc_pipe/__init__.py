@@ -112,7 +112,7 @@ class RenderRequest(betterproto.Message):
     camera_transformation: List[float] = betterproto.float_field(3)
     camera_fov: float = betterproto.float_field(4)
     camera_resolution: List[int] = betterproto.int32_field(5)
-    modality: str = betterproto.string_field(6)
+    render_pattern: str = betterproto.string_field(6)
     clip_range: float = betterproto.float_field(7)
     vdb_path: str = betterproto.string_field(8)
     proxy_model_transformation: List[float] = betterproto.float_field(9)
