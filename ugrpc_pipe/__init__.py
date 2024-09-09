@@ -113,6 +113,14 @@ class RenderRequest(betterproto.Message):
     quality: "RenderRequestQuality" = betterproto.enum_field(11)
     active_camera: str = betterproto.string_field(12)
     camera_mode: "RenderRequestCameraMode" = betterproto.enum_field(13)
+    clip_axial: float = betterproto.float_field(14)
+    """
+    below values represent the clipping distance for each axis It's aimed to
+    render cinematic image when activating dicom viewer manipulator
+    """
+
+    clip_sagittal: float = betterproto.float_field(15)
+    clip_coronal: float = betterproto.float_field(16)
 
 
 @dataclass(eq=False, repr=False)
