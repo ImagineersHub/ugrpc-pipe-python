@@ -46,6 +46,12 @@ class RenderRequestCameraMode(betterproto.Enum):
     STEREO_RIGHT = 2
 
 
+class RenderRequestRenderMode(betterproto.Enum):
+    Default = 0
+    Single_Modality = 1
+    Sphere_clipping = 2
+
+
 @dataclass(eq=False, repr=False)
 class FloatArrayRep(betterproto.Message):
     values: List[float] = betterproto.float_field(1)
@@ -121,6 +127,7 @@ class RenderRequest(betterproto.Message):
 
     clip_sagittal: float = betterproto.float_field(15)
     clip_coronal: float = betterproto.float_field(16)
+    volume_dimension: List[float] = betterproto.float_field(17)
 
 
 @dataclass(eq=False, repr=False)
