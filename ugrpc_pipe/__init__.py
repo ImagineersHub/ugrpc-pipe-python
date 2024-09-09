@@ -50,6 +50,7 @@ class RenderRequestRenderMode(betterproto.Enum):
     Default = 0
     Single_Modality = 1
     Sphere_clipping = 2
+    Modality_clipping = 3
 
 
 @dataclass(eq=False, repr=False)
