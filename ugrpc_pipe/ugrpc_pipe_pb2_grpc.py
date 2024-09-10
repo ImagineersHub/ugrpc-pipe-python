@@ -19,6 +19,11 @@ class UGrpcPipeStub(object):
                 request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.CommandParserReq.SerializeToString,
                 response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.GenericResp.FromString,
                 )
+        self.RenderImageBytes = channel.unary_unary(
+                '/ugrpc_pipe.UGrpcPipe/RenderImageBytes',
+                request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderRequest.SerializeToString,
+                response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderBytesReply.FromString,
+                )
         self.RenderImage = channel.unary_unary(
                 '/ugrpc_pipe.UGrpcPipe/RenderImage',
                 request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderRequest.SerializeToString,
@@ -35,6 +40,12 @@ class UGrpcPipeServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def CommandParser(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def RenderImageBytes(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -59,6 +70,11 @@ def add_UGrpcPipeServicer_to_server(servicer, server):
                     servicer.CommandParser,
                     request_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.CommandParserReq.FromString,
                     response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.GenericResp.SerializeToString,
+            ),
+            'RenderImageBytes': grpc.unary_unary_rpc_method_handler(
+                    servicer.RenderImageBytes,
+                    request_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderRequest.FromString,
+                    response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderBytesReply.SerializeToString,
             ),
             'RenderImage': grpc.unary_unary_rpc_method_handler(
                     servicer.RenderImage,
@@ -94,6 +110,23 @@ class UGrpcPipe(object):
         return grpc.experimental.unary_unary(request, target, '/ugrpc_pipe.UGrpcPipe/CommandParser',
             ugrpc__pipe_dot_ugrpc__pipe__pb2.CommandParserReq.SerializeToString,
             ugrpc__pipe_dot_ugrpc__pipe__pb2.GenericResp.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def RenderImageBytes(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/ugrpc_pipe.UGrpcPipe/RenderImageBytes',
+            ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderRequest.SerializeToString,
+            ugrpc__pipe_dot_ugrpc__pipe__pb2.RenderBytesReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
