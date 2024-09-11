@@ -145,8 +145,8 @@ class RenderBytesReply(betterproto.Message):
     main_image_data: bytes = betterproto.bytes_field(1)
     stereo_left_image_data: bytes = betterproto.bytes_field(2)
     stereo_right_image_data: bytes = betterproto.bytes_field(3)
-    status: str = betterproto.string_field(7)
-    error_message: str = betterproto.string_field(8)
+    status: str = betterproto.string_field(4)
+    error_message: str = betterproto.string_field(5)
 
 
 @dataclass(eq=False, repr=False)
@@ -154,8 +154,8 @@ class RenderReply(betterproto.Message):
     main_image_path: str = betterproto.string_field(1)
     stereo_left_image_path: str = betterproto.string_field(2)
     stereo_right_image_path: str = betterproto.string_field(3)
-    status: str = betterproto.string_field(7)
-    error_message: str = betterproto.string_field(8)
+    status: str = betterproto.string_field(4)
+    error_message: str = betterproto.string_field(5)
 
 
 @dataclass(eq=False, repr=False)
