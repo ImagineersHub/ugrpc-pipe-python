@@ -76,9 +76,7 @@ class Status(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class ProjectInfoResp(betterproto.Message):
-    status: Optional["Status"] = betterproto.message_field(
-        1, optional=True, group="_status"
-    )
+    status: Optional["Status"] = betterproto.message_field(1, optional=True)
     """represent the return status"""
 
     platform: "ProjectInfoRespPlatformCode" = betterproto.enum_field(2)
@@ -122,8 +120,8 @@ class RenderRequest(betterproto.Message):
     camera_mode: "RenderRequestCameraMode" = betterproto.enum_field(13)
     clip_axial: float = betterproto.float_field(14)
     """
-    below values represent the clipping distance for each axis It's aimed to
-    render cinematic image when activating dicom viewer manipulator
+    below values represent the clipping distance for each axis
+     It's aimed to render cinematic image when activating dicom viewer manipulator
     """
 
     clip_sagittal: float = betterproto.float_field(15)
@@ -145,7 +143,7 @@ class RenderBytesReply(betterproto.Message):
     main_image_data: bytes = betterproto.bytes_field(1)
     stereo_left_image_data: bytes = betterproto.bytes_field(2)
     stereo_right_image_data: bytes = betterproto.bytes_field(3)
-    status: str = betterproto.string_field(4)
+    status: "Status" = betterproto.message_field(4)
     error_message: str = betterproto.string_field(5)
 
 
@@ -154,7 +152,7 @@ class RenderReply(betterproto.Message):
     main_image_path: str = betterproto.string_field(1)
     stereo_left_image_path: str = betterproto.string_field(2)
     stereo_right_image_path: str = betterproto.string_field(3)
-    status: str = betterproto.string_field(4)
+    status: "Status" = betterproto.message_field(4)
     error_message: str = betterproto.string_field(5)
 
 
