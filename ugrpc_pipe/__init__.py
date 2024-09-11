@@ -145,6 +145,7 @@ class RenderBytesReply(betterproto.Message):
     stereo_left_image_data: bytes = betterproto.bytes_field(2)
     stereo_right_image_data: bytes = betterproto.bytes_field(3)
     status: "Status" = betterproto.message_field(4)
+    request: "RenderRequest" = betterproto.message_field(5)
 
 
 @dataclass(eq=False, repr=False)
