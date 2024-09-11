@@ -144,7 +144,6 @@ class RenderBytesReply(betterproto.Message):
     stereo_left_image_data: bytes = betterproto.bytes_field(2)
     stereo_right_image_data: bytes = betterproto.bytes_field(3)
     status: "Status" = betterproto.message_field(4)
-    error_message: str = betterproto.string_field(5)
 
 
 @dataclass(eq=False, repr=False)
@@ -153,7 +152,6 @@ class RenderReply(betterproto.Message):
     stereo_left_image_path: str = betterproto.string_field(2)
     stereo_right_image_path: str = betterproto.string_field(3)
     status: "Status" = betterproto.message_field(4)
-    error_message: str = betterproto.string_field(5)
 
 
 @dataclass(eq=False, repr=False)
@@ -205,6 +203,23 @@ class UGrpcPipeStub(betterproto.ServiceStub):
             metadata=metadata,
         )
 
+    async def route_image_bytes(
+        self,
+        render_bytes_reply: "RenderBytesReply",
+        *,
+        timeout: Optional[float] = None,
+        deadline: Optional["Deadline"] = None,
+        metadata: Optional["MetadataLike"] = None
+    ) -> "GenericResp":
+        return await self._unary_unary(
+            "/ugrpc_pipe.UGrpcPipe/RouteImageBytes",
+            render_bytes_reply,
+            GenericResp,
+            timeout=timeout,
+            deadline=deadline,
+            metadata=metadata,
+        )
+
     async def render_image(
         self,
         render_request: "RenderRequest",
@@ -251,6 +266,11 @@ class UGrpcPipeBase(ServiceBase):
     ) -> "RenderBytesReply":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
+    async def route_image_bytes(
+        self, render_bytes_reply: "RenderBytesReply"
+    ) -> "GenericResp":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
     async def render_image(self, render_request: "RenderRequest") -> "RenderReply":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
@@ -271,6 +291,13 @@ class UGrpcPipeBase(ServiceBase):
     ) -> None:
         request = await stream.recv_message()
         response = await self.render_image_bytes(request)
+        await stream.send_message(response)
+
+    async def __rpc_route_image_bytes(
+        self, stream: "grpclib.server.Stream[RenderBytesReply, GenericResp]"
+    ) -> None:
+        request = await stream.recv_message()
+        response = await self.route_image_bytes(request)
         await stream.send_message(response)
 
     async def __rpc_render_image(
@@ -301,6 +328,12 @@ class UGrpcPipeBase(ServiceBase):
                 grpclib.const.Cardinality.UNARY_UNARY,
                 RenderRequest,
                 RenderBytesReply,
+            ),
+            "/ugrpc_pipe.UGrpcPipe/RouteImageBytes": grpclib.const.Handler(
+                self.__rpc_route_image_bytes,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                RenderBytesReply,
+                GenericResp,
             ),
             "/ugrpc_pipe.UGrpcPipe/RenderImage": grpclib.const.Handler(
                 self.__rpc_render_image,
