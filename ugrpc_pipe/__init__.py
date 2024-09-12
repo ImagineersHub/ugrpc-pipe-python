@@ -131,6 +131,7 @@ class RenderRequest(betterproto.Message):
     clipping_sphere_position: List[float] = betterproto.float_field(19)
     target: str = betterproto.string_field(20)
     camera_distance: float = betterproto.float_field(21)
+    is_enhance_image: bool = betterproto.bool_field(22)
 
 
 @dataclass(eq=False, repr=False)
