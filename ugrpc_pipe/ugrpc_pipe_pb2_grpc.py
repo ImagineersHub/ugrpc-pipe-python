@@ -41,7 +41,7 @@ class UGrpcPipeStub(object):
                 )
         self.Converge3DRegestration = channel.unary_unary(
                 '/ugrpc_pipe.UGrpcPipe/Converge3DRegestration',
-                request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegestrationReq.SerializeToString,
+                request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegistrationReq.SerializeToString,
                 response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.FromString,
                 )
 
@@ -115,7 +115,7 @@ def add_UGrpcPipeServicer_to_server(servicer, server):
             ),
             'Converge3DRegestration': grpc.unary_unary_rpc_method_handler(
                     servicer.Converge3DRegestration,
-                    request_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegestrationReq.FromString,
+                    request_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegistrationReq.FromString,
                     response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.SerializeToString,
             ),
     }
@@ -225,7 +225,7 @@ class UGrpcPipe(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ugrpc_pipe.UGrpcPipe/Converge3DRegestration',
-            ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegestrationReq.SerializeToString,
+            ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegistrationReq.SerializeToString,
             ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
