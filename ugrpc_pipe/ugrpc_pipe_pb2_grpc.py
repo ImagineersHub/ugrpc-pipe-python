@@ -37,12 +37,12 @@ class UGrpcPipeStub(object):
         self.PointCloudCapture = channel.unary_unary(
                 '/ugrpc_pipe.UGrpcPipe/PointCloudCapture',
                 request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureReq.SerializeToString,
-                response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.FromString,
+                response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegistrationResp.FromString,
                 )
         self.Converge3DRegistration = channel.unary_unary(
                 '/ugrpc_pipe.UGrpcPipe/Converge3DRegistration',
                 request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegistrationReq.SerializeToString,
-                response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.FromString,
+                response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegistrationResp.FromString,
                 )
 
 
@@ -111,12 +111,12 @@ def add_UGrpcPipeServicer_to_server(servicer, server):
             'PointCloudCapture': grpc.unary_unary_rpc_method_handler(
                     servicer.PointCloudCapture,
                     request_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureReq.FromString,
-                    response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.SerializeToString,
+                    response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegistrationResp.SerializeToString,
             ),
             'Converge3DRegistration': grpc.unary_unary_rpc_method_handler(
                     servicer.Converge3DRegistration,
                     request_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegistrationReq.FromString,
-                    response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.SerializeToString,
+                    response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegistrationResp.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -209,7 +209,7 @@ class UGrpcPipe(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ugrpc_pipe.UGrpcPipe/PointCloudCapture',
             ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureReq.SerializeToString,
-            ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.FromString,
+            ugrpc__pipe_dot_ugrpc__pipe__pb2.RegistrationResp.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -226,6 +226,6 @@ class UGrpcPipe(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ugrpc_pipe.UGrpcPipe/Converge3DRegistration',
             ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegistrationReq.SerializeToString,
-            ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.FromString,
+            ugrpc__pipe_dot_ugrpc__pipe__pb2.RegistrationResp.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

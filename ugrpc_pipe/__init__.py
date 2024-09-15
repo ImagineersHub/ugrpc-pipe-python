@@ -186,7 +186,7 @@ class Converge3DRegistrationReq(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
-class RegestrationResp(betterproto.Message):
+class RegistrationResp(betterproto.Message):
     transform_matrix: List[float] = betterproto.float_field(1)
 
 
@@ -266,11 +266,11 @@ class UGrpcPipeStub(betterproto.ServiceStub):
         timeout: Optional[float] = None,
         deadline: Optional["Deadline"] = None,
         metadata: Optional["MetadataLike"] = None
-    ) -> "RegestrationResp":
+    ) -> "RegistrationResp":
         return await self._unary_unary(
             "/ugrpc_pipe.UGrpcPipe/PointCloudCapture",
             point_cloud_capture_req,
-            RegestrationResp,
+            RegistrationResp,
             timeout=timeout,
             deadline=deadline,
             metadata=metadata,
@@ -283,11 +283,11 @@ class UGrpcPipeStub(betterproto.ServiceStub):
         timeout: Optional[float] = None,
         deadline: Optional["Deadline"] = None,
         metadata: Optional["MetadataLike"] = None
-    ) -> "RegestrationResp":
+    ) -> "RegistrationResp":
         return await self._unary_unary(
             "/ugrpc_pipe.UGrpcPipe/Converge3DRegistration",
             converge3_d_registration_req,
-            RegestrationResp,
+            RegistrationResp,
             timeout=timeout,
             deadline=deadline,
             metadata=metadata,
@@ -315,12 +315,12 @@ class UGrpcPipeBase(ServiceBase):
 
     async def point_cloud_capture(
         self, point_cloud_capture_req: "PointCloudCaptureReq"
-    ) -> "RegestrationResp":
+    ) -> "RegistrationResp":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def converge3_d_registration(
         self, converge3_d_registration_req: "Converge3DRegistrationReq"
-    ) -> "RegestrationResp":
+    ) -> "RegistrationResp":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def __rpc_command_parser(
@@ -352,7 +352,7 @@ class UGrpcPipeBase(ServiceBase):
         await stream.send_message(response)
 
     async def __rpc_point_cloud_capture(
-        self, stream: "grpclib.server.Stream[PointCloudCaptureReq, RegestrationResp]"
+        self, stream: "grpclib.server.Stream[PointCloudCaptureReq, RegistrationResp]"
     ) -> None:
         request = await stream.recv_message()
         response = await self.point_cloud_capture(request)
@@ -360,7 +360,7 @@ class UGrpcPipeBase(ServiceBase):
 
     async def __rpc_converge3_d_registration(
         self,
-        stream: "grpclib.server.Stream[Converge3DRegistrationReq, RegestrationResp]",
+        stream: "grpclib.server.Stream[Converge3DRegistrationReq, RegistrationResp]",
     ) -> None:
         request = await stream.recv_message()
         response = await self.converge3_d_registration(request)
@@ -396,12 +396,12 @@ class UGrpcPipeBase(ServiceBase):
                 self.__rpc_point_cloud_capture,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 PointCloudCaptureReq,
-                RegestrationResp,
+                RegistrationResp,
             ),
             "/ugrpc_pipe.UGrpcPipe/Converge3DRegistration": grpclib.const.Handler(
                 self.__rpc_converge3_d_registration,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 Converge3DRegistrationReq,
-                RegestrationResp,
+                RegistrationResp,
             ),
         }
