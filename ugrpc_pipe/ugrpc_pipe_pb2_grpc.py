@@ -39,8 +39,8 @@ class UGrpcPipeStub(object):
                 request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureReq.SerializeToString,
                 response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.FromString,
                 )
-        self.Converge3DRegestration = channel.unary_unary(
-                '/ugrpc_pipe.UGrpcPipe/Converge3DRegestration',
+        self.Converge3DRegistration = channel.unary_unary(
+                '/ugrpc_pipe.UGrpcPipe/Converge3DRegistration',
                 request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegistrationReq.SerializeToString,
                 response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.FromString,
                 )
@@ -79,7 +79,7 @@ class UGrpcPipeServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def Converge3DRegestration(self, request, context):
+    def Converge3DRegistration(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -113,8 +113,8 @@ def add_UGrpcPipeServicer_to_server(servicer, server):
                     request_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureReq.FromString,
                     response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.SerializeToString,
             ),
-            'Converge3DRegestration': grpc.unary_unary_rpc_method_handler(
-                    servicer.Converge3DRegestration,
+            'Converge3DRegistration': grpc.unary_unary_rpc_method_handler(
+                    servicer.Converge3DRegistration,
                     request_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegistrationReq.FromString,
                     response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.SerializeToString,
             ),
@@ -214,7 +214,7 @@ class UGrpcPipe(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def Converge3DRegestration(request,
+    def Converge3DRegistration(request,
             target,
             options=(),
             channel_credentials=None,
@@ -224,7 +224,7 @@ class UGrpcPipe(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ugrpc_pipe.UGrpcPipe/Converge3DRegestration',
+        return grpc.experimental.unary_unary(request, target, '/ugrpc_pipe.UGrpcPipe/Converge3DRegistration',
             ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegistrationReq.SerializeToString,
             ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.FromString,
             options, channel_credentials,

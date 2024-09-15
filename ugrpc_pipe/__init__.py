@@ -276,7 +276,7 @@ class UGrpcPipeStub(betterproto.ServiceStub):
             metadata=metadata,
         )
 
-    async def converge3_d_regestration(
+    async def converge3_d_registration(
         self,
         converge3_d_registration_req: "Converge3DRegistrationReq",
         *,
@@ -285,7 +285,7 @@ class UGrpcPipeStub(betterproto.ServiceStub):
         metadata: Optional["MetadataLike"] = None
     ) -> "RegestrationResp":
         return await self._unary_unary(
-            "/ugrpc_pipe.UGrpcPipe/Converge3DRegestration",
+            "/ugrpc_pipe.UGrpcPipe/Converge3DRegistration",
             converge3_d_registration_req,
             RegestrationResp,
             timeout=timeout,
@@ -318,7 +318,7 @@ class UGrpcPipeBase(ServiceBase):
     ) -> "RegestrationResp":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def converge3_d_regestration(
+    async def converge3_d_registration(
         self, converge3_d_registration_req: "Converge3DRegistrationReq"
     ) -> "RegestrationResp":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
@@ -358,12 +358,12 @@ class UGrpcPipeBase(ServiceBase):
         response = await self.point_cloud_capture(request)
         await stream.send_message(response)
 
-    async def __rpc_converge3_d_regestration(
+    async def __rpc_converge3_d_registration(
         self,
         stream: "grpclib.server.Stream[Converge3DRegistrationReq, RegestrationResp]",
     ) -> None:
         request = await stream.recv_message()
-        response = await self.converge3_d_regestration(request)
+        response = await self.converge3_d_registration(request)
         await stream.send_message(response)
 
     def __mapping__(self) -> Dict[str, grpclib.const.Handler]:
@@ -398,8 +398,8 @@ class UGrpcPipeBase(ServiceBase):
                 PointCloudCaptureReq,
                 RegestrationResp,
             ),
-            "/ugrpc_pipe.UGrpcPipe/Converge3DRegestration": grpclib.const.Handler(
-                self.__rpc_converge3_d_regestration,
+            "/ugrpc_pipe.UGrpcPipe/Converge3DRegistration": grpclib.const.Handler(
+                self.__rpc_converge3_d_registration,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 Converge3DRegistrationReq,
                 RegestrationResp,
