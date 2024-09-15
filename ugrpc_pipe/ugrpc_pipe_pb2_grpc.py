@@ -37,7 +37,12 @@ class UGrpcPipeStub(object):
         self.PointCloudCapture = channel.unary_unary(
                 '/ugrpc_pipe.UGrpcPipe/PointCloudCapture',
                 request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureReq.SerializeToString,
-                response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureResp.FromString,
+                response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.FromString,
+                )
+        self.Converge3DRegestration = channel.unary_unary(
+                '/ugrpc_pipe.UGrpcPipe/Converge3DRegestration',
+                request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegestrationReq.SerializeToString,
+                response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.FromString,
                 )
 
 
@@ -74,6 +79,12 @@ class UGrpcPipeServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Converge3DRegestration(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_UGrpcPipeServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -100,7 +111,12 @@ def add_UGrpcPipeServicer_to_server(servicer, server):
             'PointCloudCapture': grpc.unary_unary_rpc_method_handler(
                     servicer.PointCloudCapture,
                     request_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureReq.FromString,
-                    response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureResp.SerializeToString,
+                    response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.SerializeToString,
+            ),
+            'Converge3DRegestration': grpc.unary_unary_rpc_method_handler(
+                    servicer.Converge3DRegestration,
+                    request_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegestrationReq.FromString,
+                    response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -193,6 +209,23 @@ class UGrpcPipe(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ugrpc_pipe.UGrpcPipe/PointCloudCapture',
             ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureReq.SerializeToString,
-            ugrpc__pipe_dot_ugrpc__pipe__pb2.PointCloudCaptureResp.FromString,
+            ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Converge3DRegestration(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/ugrpc_pipe.UGrpcPipe/Converge3DRegestration',
+            ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegestrationReq.SerializeToString,
+            ugrpc__pipe_dot_ugrpc__pipe__pb2.RegestrationResp.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

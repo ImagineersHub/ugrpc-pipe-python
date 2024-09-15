@@ -170,7 +170,22 @@ class PointCloudCaptureReq(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
-class PointCloudCaptureResp(betterproto.Message):
+class Converge3DRegestrationReq(betterproto.Message):
+    models: List[str] = betterproto.string_field(1)
+    """
+    Scan point cloud data from the models by giving ray casting direction
+     and radius region
+    """
+
+    direction: List[float] = betterproto.float_field(2)
+    radius: float = betterproto.float_field(3)
+    target_points: List[float] = betterproto.float_field(4)
+    case_id: int = betterproto.int32_field(5)
+    case_guid: str = betterproto.string_field(6)
+
+
+@dataclass(eq=False, repr=False)
+class RegestrationResp(betterproto.Message):
     transform_matrix: List[float] = betterproto.float_field(1)
 
 
@@ -250,11 +265,28 @@ class UGrpcPipeStub(betterproto.ServiceStub):
         timeout: Optional[float] = None,
         deadline: Optional["Deadline"] = None,
         metadata: Optional["MetadataLike"] = None
-    ) -> "PointCloudCaptureResp":
+    ) -> "RegestrationResp":
         return await self._unary_unary(
             "/ugrpc_pipe.UGrpcPipe/PointCloudCapture",
             point_cloud_capture_req,
-            PointCloudCaptureResp,
+            RegestrationResp,
+            timeout=timeout,
+            deadline=deadline,
+            metadata=metadata,
+        )
+
+    async def converge3_d_regestration(
+        self,
+        converge3_d_regestration_req: "Converge3DRegestrationReq",
+        *,
+        timeout: Optional[float] = None,
+        deadline: Optional["Deadline"] = None,
+        metadata: Optional["MetadataLike"] = None
+    ) -> "RegestrationResp":
+        return await self._unary_unary(
+            "/ugrpc_pipe.UGrpcPipe/Converge3DRegestration",
+            converge3_d_regestration_req,
+            RegestrationResp,
             timeout=timeout,
             deadline=deadline,
             metadata=metadata,
@@ -282,7 +314,12 @@ class UGrpcPipeBase(ServiceBase):
 
     async def point_cloud_capture(
         self, point_cloud_capture_req: "PointCloudCaptureReq"
-    ) -> "PointCloudCaptureResp":
+    ) -> "RegestrationResp":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def converge3_d_regestration(
+        self, converge3_d_regestration_req: "Converge3DRegestrationReq"
+    ) -> "RegestrationResp":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def __rpc_command_parser(
@@ -314,11 +351,18 @@ class UGrpcPipeBase(ServiceBase):
         await stream.send_message(response)
 
     async def __rpc_point_cloud_capture(
-        self,
-        stream: "grpclib.server.Stream[PointCloudCaptureReq, PointCloudCaptureResp]",
+        self, stream: "grpclib.server.Stream[PointCloudCaptureReq, RegestrationResp]"
     ) -> None:
         request = await stream.recv_message()
         response = await self.point_cloud_capture(request)
+        await stream.send_message(response)
+
+    async def __rpc_converge3_d_regestration(
+        self,
+        stream: "grpclib.server.Stream[Converge3DRegestrationReq, RegestrationResp]",
+    ) -> None:
+        request = await stream.recv_message()
+        response = await self.converge3_d_regestration(request)
         await stream.send_message(response)
 
     def __mapping__(self) -> Dict[str, grpclib.const.Handler]:
@@ -351,6 +395,12 @@ class UGrpcPipeBase(ServiceBase):
                 self.__rpc_point_cloud_capture,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 PointCloudCaptureReq,
-                PointCloudCaptureResp,
+                RegestrationResp,
+            ),
+            "/ugrpc_pipe.UGrpcPipe/Converge3DRegestration": grpclib.const.Handler(
+                self.__rpc_converge3_d_regestration,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                Converge3DRegestrationReq,
+                RegestrationResp,
             ),
         }
