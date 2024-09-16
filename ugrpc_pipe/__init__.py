@@ -177,12 +177,13 @@ class Converge3DRegistrationReq(betterproto.Message):
      and radius region
     """
 
-    direction: List[float] = betterproto.float_field(2)
-    model_transformation: List[float] = betterproto.float_field(3)
+    center_point_position: List[float] = betterproto.float_field(2)
+    camera_position: List[float] = betterproto.float_field(3)
     radius: float = betterproto.float_field(4)
-    target_points: List[float] = betterproto.float_field(5)
-    case_id: int = betterproto.int32_field(6)
-    case_guid: str = betterproto.string_field(7)
+    model_transformation: List[float] = betterproto.float_field(5)
+    target_points: List[float] = betterproto.float_field(6)
+    case_id: int = betterproto.int32_field(7)
+    case_guid: str = betterproto.string_field(8)
 
 
 @dataclass(eq=False, repr=False)
