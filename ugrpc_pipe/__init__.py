@@ -184,11 +184,13 @@ class Converge3DRegistrationReq(betterproto.Message):
     target_points: List[float] = betterproto.float_field(6)
     case_id: int = betterproto.int32_field(7)
     case_guid: str = betterproto.string_field(8)
+    target: str = betterproto.string_field(9)
 
 
 @dataclass(eq=False, repr=False)
 class RegistrationResp(betterproto.Message):
     transform_matrix: List[float] = betterproto.float_field(1)
+    is_success: bool = betterproto.bool_field(2)
 
 
 class UGrpcPipeStub(betterproto.ServiceStub):
