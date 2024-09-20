@@ -171,20 +171,25 @@ class PointCloudCaptureReq(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class Converge3DRegistrationReq(betterproto.Message):
-    models: List[str] = betterproto.string_field(1)
+    case_id: int = betterproto.int32_field(1)
     """
     Scan point cloud data from the models by giving ray casting direction
      and radius region
     """
 
-    center_point_position: List[float] = betterproto.float_field(2)
-    camera_position: List[float] = betterproto.float_field(3)
-    radius: float = betterproto.float_field(4)
-    model_transformation: List[float] = betterproto.float_field(5)
-    target_points: List[float] = betterproto.float_field(6)
-    case_id: int = betterproto.int32_field(7)
-    case_guid: str = betterproto.string_field(8)
-    target: str = betterproto.string_field(9)
+    case_guid: str = betterproto.string_field(2)
+    target: str = betterproto.string_field(3)
+    models: List[str] = betterproto.string_field(4)
+    center_point_position: List[float] = betterproto.float_field(5)
+    camera_position: List[float] = betterproto.float_field(6)
+    radius: float = betterproto.float_field(7)
+    model_transformation: List[float] = betterproto.float_field(8)
+    target_points: List[float] = betterproto.float_field(9)
+    dataset_numbers: int = betterproto.int32_field(10)
+    """
+    target_points datasset contains multiple point clouds captured
+    from different timestamps. dataset_numbers represents the total numbers
+    """
 
 
 @dataclass(eq=False, repr=False)
