@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='ugrpc_pipe',
-    version='0.1.35',
+    version='0.1.36',
     license='MIT',
     description='protobuf for grpc Pipe',
     long_description=open("README.md").read(),
