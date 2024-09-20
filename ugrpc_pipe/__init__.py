@@ -185,11 +185,7 @@ class Converge3DRegistrationReq(betterproto.Message):
     radius: float = betterproto.float_field(7)
     model_transformation: List[float] = betterproto.float_field(8)
     target_points: List[float] = betterproto.float_field(9)
-    dataset_count: int = betterproto.int32_field(10)
-    """
-    target_points datasset contains multiple point clouds captured
-    from different timestamps. dataset_numbers represents the total numbers
-    """
+    chunk_size: List[int] = betterproto.int32_field(10)
 
 
 @dataclass(eq=False, repr=False)
