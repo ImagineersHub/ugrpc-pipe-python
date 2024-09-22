@@ -132,6 +132,11 @@ class RenderRequest(betterproto.Message):
     target: str = betterproto.string_field(20)
     camera_distance: float = betterproto.float_field(21)
     is_enhance_image: bool = betterproto.bool_field(22)
+    is_instant_render: bool = betterproto.bool_field(23)
+    """
+    represents whether to render the image instantly or not. If rendering with
+     the same color pattern, it would perform instant rendering
+    """
 
 
 @dataclass(eq=False, repr=False)
