@@ -154,6 +154,8 @@ class RenderBytesReply(betterproto.Message):
     status: "Status" = betterproto.message_field(4)
     request: "RenderRequest" = betterproto.message_field(5)
     ipd_offset: float = betterproto.float_field(6)
+    width: float = betterproto.float_field(7)
+    height: float = betterproto.float_field(8)
 
 
 @dataclass(eq=False, repr=False)
