@@ -93,6 +93,11 @@ class ProjectInfoResp(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
+class HealthCheckRequest(betterproto.Message):
+    message: str = betterproto.string_field(1)
+
+
+@dataclass(eq=False, repr=False)
 class CommandParserReq(betterproto.Message):
     payload: str = betterproto.string_field(1)
 
@@ -130,9 +135,10 @@ class RenderRequest(betterproto.Message):
     render_mode: "RenderRequestRenderMode" = betterproto.enum_field(18)
     clipping_sphere_position: List[float] = betterproto.float_field(19)
     target: str = betterproto.string_field(20)
-    camera_distance: float = betterproto.float_field(21)
-    is_enhance_image: bool = betterproto.bool_field(22)
-    is_instant_render: bool = betterproto.bool_field(23)
+    room_name: str = betterproto.string_field(21)
+    camera_distance: float = betterproto.float_field(22)
+    is_enhance_image: bool = betterproto.bool_field(23)
+    is_instant_render: bool = betterproto.bool_field(24)
     """
     represents whether to render the image instantly or not. If rendering with
      the same color pattern, it would perform instant rendering
@@ -304,6 +310,23 @@ class UGrpcPipeStub(betterproto.ServiceStub):
             metadata=metadata,
         )
 
+    async def health_check(
+        self,
+        health_check_request: "HealthCheckRequest",
+        *,
+        timeout: Optional[float] = None,
+        deadline: Optional["Deadline"] = None,
+        metadata: Optional["MetadataLike"] = None
+    ) -> "Status":
+        return await self._unary_unary(
+            "/ugrpc_pipe.UGrpcPipe/HealthCheck",
+            health_check_request,
+            Status,
+            timeout=timeout,
+            deadline=deadline,
+            metadata=metadata,
+        )
+
 
 class UGrpcPipeBase(ServiceBase):
     async def command_parser(
@@ -332,6 +355,11 @@ class UGrpcPipeBase(ServiceBase):
     async def converge3_d_registration(
         self, converge3_d_registration_req: "Converge3DRegistrationReq"
     ) -> "RegistrationResp":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def health_check(
+        self, health_check_request: "HealthCheckRequest"
+    ) -> "Status":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def __rpc_command_parser(
@@ -377,6 +405,13 @@ class UGrpcPipeBase(ServiceBase):
         response = await self.converge3_d_registration(request)
         await stream.send_message(response)
 
+    async def __rpc_health_check(
+        self, stream: "grpclib.server.Stream[HealthCheckRequest, Status]"
+    ) -> None:
+        request = await stream.recv_message()
+        response = await self.health_check(request)
+        await stream.send_message(response)
+
     def __mapping__(self) -> Dict[str, grpclib.const.Handler]:
         return {
             "/ugrpc_pipe.UGrpcPipe/CommandParser": grpclib.const.Handler(
@@ -414,5 +449,11 @@ class UGrpcPipeBase(ServiceBase):
                 grpclib.const.Cardinality.UNARY_UNARY,
                 Converge3DRegistrationReq,
                 RegistrationResp,
+            ),
+            "/ugrpc_pipe.UGrpcPipe/HealthCheck": grpclib.const.Handler(
+                self.__rpc_health_check,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                HealthCheckRequest,
+                Status,
             ),
         }

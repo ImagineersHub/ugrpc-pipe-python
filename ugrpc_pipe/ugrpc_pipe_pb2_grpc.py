@@ -44,6 +44,11 @@ class UGrpcPipeStub(object):
                 request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegistrationReq.SerializeToString,
                 response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegistrationResp.FromString,
                 )
+        self.HealthCheck = channel.unary_unary(
+                '/ugrpc_pipe.UGrpcPipe/HealthCheck',
+                request_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.HealthCheckRequest.SerializeToString,
+                response_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.Status.FromString,
+                )
 
 
 class UGrpcPipeServicer(object):
@@ -85,6 +90,12 @@ class UGrpcPipeServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def HealthCheck(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_UGrpcPipeServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -117,6 +128,11 @@ def add_UGrpcPipeServicer_to_server(servicer, server):
                     servicer.Converge3DRegistration,
                     request_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegistrationReq.FromString,
                     response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.RegistrationResp.SerializeToString,
+            ),
+            'HealthCheck': grpc.unary_unary_rpc_method_handler(
+                    servicer.HealthCheck,
+                    request_deserializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.HealthCheckRequest.FromString,
+                    response_serializer=ugrpc__pipe_dot_ugrpc__pipe__pb2.Status.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -227,5 +243,22 @@ class UGrpcPipe(object):
         return grpc.experimental.unary_unary(request, target, '/ugrpc_pipe.UGrpcPipe/Converge3DRegistration',
             ugrpc__pipe_dot_ugrpc__pipe__pb2.Converge3DRegistrationReq.SerializeToString,
             ugrpc__pipe_dot_ugrpc__pipe__pb2.RegistrationResp.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def HealthCheck(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/ugrpc_pipe.UGrpcPipe/HealthCheck',
+            ugrpc__pipe_dot_ugrpc__pipe__pb2.HealthCheckRequest.SerializeToString,
+            ugrpc__pipe_dot_ugrpc__pipe__pb2.Status.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
