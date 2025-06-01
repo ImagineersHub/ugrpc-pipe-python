@@ -207,6 +207,27 @@ class RegistrationResp(betterproto.Message):
     is_success: bool = betterproto.bool_field(2)
 
 
+@dataclass(eq=False, repr=False)
+class SubScribeTrackingSensorTransformReq(betterproto.Message):
+    target: str = betterproto.string_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class UnsubScribeTrackingSensorTransformReq(betterproto.Message):
+    target: str = betterproto.string_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class PositioningSensorTransform(betterproto.Message):
+    translation: List[float] = betterproto.float_field(1)
+    orientation: List[float] = betterproto.float_field(2)
+
+
+@dataclass(eq=False, repr=False)
+class TrackingSensorTransformResp(betterproto.Message):
+    transform_matrix: List[float] = betterproto.float_field(1)
+
+
 class UGrpcPipeStub(betterproto.ServiceStub):
     async def command_parser(
         self,
